@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  metadataBase: new URL('https://elux.netlify.app'),
+  metadataBase: new URL('https://e-lux.netlify.app'),
   title: {
     default: 'Elux',
     template: '%s | Elux',
@@ -49,7 +49,7 @@ export const metadata = {
   },
   openGraph: {
     type: 'website',
-    url: 'https://elux.netlify.app',
+    url: 'https://e-lux.netlify.app',
     siteName: 'Elux',
     title: 'Elux — Premium Home Electronic Appliances',
     description:
@@ -82,7 +82,7 @@ export const metadata = {
     ],
   },
   alternates: {
-    canonical: 'https://elux.netlify.app',
+    canonical: 'https://e-lux.netlify.app',
   },
   category: 'ecommerce',
 };
