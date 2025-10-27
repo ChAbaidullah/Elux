@@ -94,7 +94,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-          <div className="relative min-h-screen overflow-hidden">
+          <div className="relative min-h-screen overflow-x-hidden">
             {/* Background layers: Tech theme (lightened) */}
             <div className="pointer-events-none absolute inset-0 tech-gradient z-0" />
             <div className="pointer-events-none absolute inset-0 tech-grid z-0" />
