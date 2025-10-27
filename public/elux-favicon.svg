@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="48" fill="#0f172a"/>
+  <!-- Stylized lowercase 'e' -->
+  <circle cx="128" cy="128" r="56" fill="none" stroke="url(#g)" stroke-width="28" stroke-linecap="round"/>
+  <path d="M96 128h64" fill="none" stroke="url(#g)" stroke-width="28" stroke-linecap="round"/>
+  <!-- Create a small gap on the right of the circle to read as 'e' -->
+  <rect x="176" y="112" width="28" height="32" rx="6" fill="#0f172a"/>
+</svg>
