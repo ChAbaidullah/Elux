@@ -1,12 +1,13 @@
 import { notFound } from 'next/navigation';
-import products from '@/data/products';
 import ProductDetailClient from '@/components/ProductDetailClient';
 
 export default async function ProductDetail({ params }) {
   const { id } = await params;
-  const numericId = Number(id);
-  const product = products.find((p) => p.id === numericId);
-  if (!product) return notFound();
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/products/${id}`, {
+    cache: 'no-store',
+  });
+  if (!res.ok) return notFound();
+  const product = await res.json();
 
   return <ProductDetailClient product={product} />;
 }

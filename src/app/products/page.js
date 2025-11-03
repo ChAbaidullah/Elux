@@ -1,9 +1,8 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setQuery, setCategory } from '@/redux/slices/productSlice';
-import products from '@/data/products';
 import ProductCard from '@/components/ProductCard';
 import { motion } from 'framer-motion';
 
@@ -13,21 +12,44 @@ export default function ProductsPage() {
 
   const [priceMin, setPriceMin] = useState(0);
   const [priceMax, setPriceMax] = useState(200000);
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  async function load() {
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch('/api/products', { cache: 'no-store' });
+      if (!res.ok) throw new Error(await res.text());
+      const data = await res.json();
+      setItems(data);
+    } catch (e) {
+      setError('Failed to load products');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const categories = useMemo(() => {
     const set = new Set(['All']);
-    products.forEach((p) => set.add(p.category));
+    items.forEach((p) => set.add(p.category));
     return Array.from(set);
-  }, []);
+  }, [items]);
 
   const filtered = useMemo(() => {
-    return products.filter((p) => {
+    return items.filter((p) => {
       const inCat = category === 'All' || p.category === category;
       const inQuery = !query || p.name.toLowerCase().includes(query.toLowerCase());
       const inPrice = p.price >= priceMin && p.price <= priceMax;
       return inCat && inQuery && inPrice;
     });
-  }, [query, category, priceMin, priceMax]);
+  }, [items, query, category, priceMin, priceMax]);
 
   return (
     <main className="mx-auto max-w-7xl px-6 pt-28 pb-16">
@@ -68,10 +90,12 @@ export default function ProductsPage() {
       </div>
 
       <motion.div layout className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {filtered.map((p) => (
+        {loading && <div className="col-span-full text-center text-zinc-600">Loading...</div>}
+        {error && <div className="col-span-full text-center text-red-600 text-sm">{error}</div>}
+        {!loading && !error && filtered.map((p) => (
           <ProductCard key={p.id} product={p} />
         ))}
-        {filtered.length === 0 && (
+        {!loading && !error && filtered.length === 0 && (
           <div className="col-span-full text-center text-zinc-600">No products match your filters.</div>
         )}
       </motion.div>
