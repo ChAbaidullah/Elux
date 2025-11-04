@@ -66,4 +66,6 @@ export default function TechModel({ modelUrl }) {
   );
 }
 
-useGLTF.preload(DEFAULT_MODEL_URL);
+if (typeof window !== 'undefined') {
+  useGLTF.preload(DEFAULT_MODEL_URL);
+}
